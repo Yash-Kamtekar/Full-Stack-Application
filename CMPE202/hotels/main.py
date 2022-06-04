@@ -13,14 +13,14 @@ router = APIRouter(
 
 
 @router.get("/", status_code=status.HTTP_200_OK)
-def getAllHotels(limit: int = 10, current_user: schemas.UserDetail = Depends(oauth2.get_current_user) ):
+def getAllHotels(current_user: schemas.UserDetail = Depends(oauth2.get_current_user)):
 
 
-    return f"{limit} hotels {current_user}"
+    return f"hotels {current_user}"
 
 
 @router.post("/add", status_code=status.HTTP_200_OK)
-def addHotel(request: hotel_schemas.AddHotel, db: Session = Depends(database.get_db)):
+def addHotel(request: hotel_schemas.AddHotel, db: Session = Depends(database.get_db), current_user: schemas.UserDetail = Depends(oauth2.get_current_user)):
     return hotel_repository.addHotel(request, db)
 
 # @router.get("/", status_code=status.HTTP_200_OK)
