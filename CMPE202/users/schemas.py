@@ -17,13 +17,13 @@ class Login(BaseModel):
     password: str
 
 
-# class UserDetail(User):
-#     username: str
-#     email: str
-#     phone: str
-#     rewards: int
-#     role: str
-#     member_type: str
+class UserDetail(BaseModel):
+    username: str
+    email: str
+    phone: str
+    rewards: int
+    role: str
+    member_type: str
 
 
 class Token(BaseModel):

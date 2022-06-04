@@ -1,30 +1,24 @@
-from fastapi import FastAPI
-from . import database, models
-from .routers import user, auth
+from fastapi import APIRouter, status, Depends
+from sqlalchemy.orm import Session
+from .repository import user_repository, auth_repository
+from . import schemas
+from .. import database
+from fastapi.security import OAuth2PasswordRequestForm
 
 
-models.Base.metadata.create_all(bind=database.engine)
+router = APIRouter(
+    tags=["User"],
+)
 
 
-app = FastAPI()
-app.include_router(user.router)
-app.include_router(auth.router)
+@router.post("/register", status_code=status.HTTP_200_OK)
+def register(request: schemas.RegisterUser, db: Session = Depends(database.get_db)):
+    return user_repository.register(request, db)
 
 
-# @app.post("/signin", status_code=status.HTTP_200_OK)
-# def signIn(response = Response, db: Session = Depends(get_db)):
-#     print("here")
-
-#     # hashed_pwd = pwd_cxt.hash(request.password)
-#     # users = db.query(models.User).filter(models.User.username == request.username and models.User.password == hashed_pwd)
-
-#     # if not users:
-#     #     response.status_code = status.HTTP_401_UNAUTHORIZED
-#     #     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Username/Password incorrect")
-
-#     # return users
-#     pass
-
+@router.post("/signin", status_code=status.HTTP_200_OK)
+def signIn(request: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
+    return auth_repository.logIn(request, db)
 
 # @app.delete("/unsubscribe/{id}", status_code=status.HTTP_204_NO_CONTENT)
 # def unsubscribe(id, db: Session = Depends(get_db)):
