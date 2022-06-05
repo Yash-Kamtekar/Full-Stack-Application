@@ -1,10 +1,11 @@
 from fastapi import status, HTTPException
-from .. import schemas, models, token
+from fastapi.security import OAuth2PasswordRequestForm
+from .. import models, token
 from sqlalchemy.orm import Session
 from ..hashing import Hash
 
 
-def logIn(request: schemas.Login, db: Session):
+def logIn(request: OAuth2PasswordRequestForm, db: Session):
 
     user = db.query(models.User).filter(models.User.username == request.username).first()
 
@@ -19,5 +20,17 @@ def logIn(request: schemas.Login, db: Session):
         # expires_delta=access_token_expires
     )
 
+    response = {
+        "access_token": access_token,
+        "user_details": {
+            "username": user.username,
+            "phone": user.phone,
+            "email": user.email,
+            "rewards": user.rewards,
+            "member_type": user.member_type,
+            "role": user.role
+        }
+    }
 
-    return {"access_token": access_token, "token_type": "bearer"}
+
+    return response
