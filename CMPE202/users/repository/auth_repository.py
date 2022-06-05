@@ -1,10 +1,11 @@
 from fastapi import status, HTTPException
-from .. import schemas, models, token
+from fastapi.security import OAuth2PasswordRequestForm
+from .. import models, token
 from sqlalchemy.orm import Session
 from ..hashing import Hash
 
 
-def logIn(request: schemas.Login, db: Session):
+def logIn(request: OAuth2PasswordRequestForm, db: Session):
 
     user = db.query(models.User).filter(models.User.username == request.username).first()
 

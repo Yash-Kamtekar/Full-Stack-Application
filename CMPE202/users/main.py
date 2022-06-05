@@ -16,7 +16,7 @@ def register(request: schemas.RegisterUser, db: Session = Depends(database.get_d
     return user_repository.register(request, db)
 
 
-@router.post("/signin", status_code=status.HTTP_200_OK)
+@router.post("/login", status_code=status.HTTP_200_OK)
 def signIn(request: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
     return auth_repository.logIn(request, db)
 
