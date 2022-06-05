@@ -20,5 +20,17 @@ def logIn(request: OAuth2PasswordRequestForm, db: Session):
         # expires_delta=access_token_expires
     )
 
+    response = {
+        "access_token": access_token,
+        "user_details": {
+            "username": user.username,
+            "phone": user.phone,
+            "email": user.email,
+            "rewards": user.rewards,
+            "member_type": user.member_type,
+            "role": user.role
+        }
+    }
 
-    return {"access_token": access_token, "token_type": "bearer"}
+
+    return response
