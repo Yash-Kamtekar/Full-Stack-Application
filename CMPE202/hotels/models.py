@@ -6,7 +6,7 @@ class Hotel(Base):
 
 
     id = Column(Integer, primary_key=True, index=True)
-    hotel_name = Column(String)
+    hotel_name = Column(String, unique=True, index=True)
     address = Column(String)
     country = Column(String)
     city = Column(Integer)
