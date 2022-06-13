@@ -14,4 +14,4 @@ FastAPI application
 
 4. Start the server
 
-    uvicorn main:app --reload
+    uvicorn CMPE202.main:app --reload
