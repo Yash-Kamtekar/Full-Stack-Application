@@ -14,9 +14,9 @@ router = APIRouter(
 
 @router.get("/", status_code=status.HTTP_200_OK)
 # def getAllHotels(current_user: schemas.UserDetail = Depends(oauth2.get_current_user)):
-def getAllHotels():
+def getAllHotels(db: Session = Depends(database.get_db)):
 
-    return f"hotels"
+    return hotel_repository.getHotels(db)
 
 
 @router.post("/add", status_code=status.HTTP_200_OK)

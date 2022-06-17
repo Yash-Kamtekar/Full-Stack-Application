@@ -24,3 +24,9 @@ def addHotel(request: schemas.AddHotel, db: Session):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Oops! Hotel Name already registered in our system")
 
     return {"details": "Successfully Registered"}
+
+
+def getHotels(db: Session):
+
+    hotels = db.query(models.Hotel).all()
+    return hotels
