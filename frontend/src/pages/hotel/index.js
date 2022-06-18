@@ -1,22 +1,24 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { addHotelAction, getHotelAction } from "../../store/actions/HotelAction";
 
+import { useDispatch, useSelector } from "react-redux";
+import { fetchHotels } from "../../store/features/hotelSlice";
 
-function Hotel(props) {
+function Hotel() {
+    const hotels = useSelector(state => state.hotels);
+    const disptach = useDispatch();
 
     useEffect(() => {
-        props.getHotel();
+        disptach(fetchHotels());
     }, [])
 
     function addHotel() {
-        props.addHotel();
+        // props.addHotel();
     }
 
     return (
         <div className="container-md">
             <div className="row">
-                {props.hotels.map((item, id) => (
+                {hotels["hotels"] !== undefined && hotels.hotels.map((item, id) => (
                     <div key={id} className="col-md-3">
                         {item.hotel_name}
                         {item.address}
@@ -31,17 +33,5 @@ function Hotel(props) {
     )
 }
 
-const mapStateToProps = (state) => {
-    return {
-        hotels: state.hotels
-    }
-}
 
-const mapDisptachToProps = (dispatch) => {
-    return {
-        addHotel: () => dispatch(addHotelAction()),
-        getHotel: () => dispatch(getHotelAction())
-    }
-}
-
-export default connect(mapStateToProps, mapDisptachToProps)(Hotel);
+export default Hotel;

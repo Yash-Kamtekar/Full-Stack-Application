@@ -1,12 +1,12 @@
-import { applyMiddleware, compose, createStore } from "redux";
-import HotelReducer from "./reducer/HotelReducer";
-import thunk from "redux-thunk";
+import { configureStore } from '@reduxjs/toolkit';
+
+import hotelReducer from './features/hotelSlice';
 
 
-const middleware = applyMiddleware(thunk);
+const store = configureStore({
+    reducer: {
+        hotels: hotelReducer
+    }
+});
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
-
-
-export const store = createStore(HotelReducer, composeEnhancers(middleware));
+export default store;
