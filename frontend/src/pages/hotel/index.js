@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { fetchHotels } from "../../store/features/hotelSlice";
+import { fetchHotels } from "../../store/features/hotel/hotelSlice";
 
 function Hotel() {
     const hotels = useSelector(state => state.hotels);

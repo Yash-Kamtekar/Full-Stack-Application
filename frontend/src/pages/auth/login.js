@@ -1,16 +1,20 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
-import { Elements } from "../../common";
+import { Button, Elements } from "../../common";
+import { loginUser } from "../../store/features/auth/loginSlice";
 
 
 const Login = () => {
 
+    const loginState = useSelector(state => state.user);
+    const disptach = useDispatch();
+
     const [val, setVal] = useState({
-        username: "",
-        password: ""
+        username: "yash",
+        password: "test123"
     })
-    const [loading, setLoading] = useState(false);
 
     function onchange(newval, id) {
         let temp = { ...val }
@@ -21,7 +25,7 @@ const Login = () => {
     function login(e) {
         e.preventDefault();
 
-
+        disptach(loginUser(val));
     }
 
     return (
@@ -56,15 +60,15 @@ const Login = () => {
                             ]}
                         />
                     </div>
-                    {/* {loginError !== null && <p>
-                        <font color='red'>{loginError}</font>
-                    </p>} */}
+                    {loginState.error !== null && <p>
+                        <font color='red'>{loginState.error}</font>
+                    </p>}
                     <div className='d-flex justify-content-center'>
-                        {/* <Button
+                        <Button
                             text='Login'
                             type='submit'
-                            loading={loading}
-                        /> */}
+                            loading={loginState.loading}
+                        />
                     </div>
                 </form>
                 <div className='d-flex justify-content-center pt-3 pb-3' style={{ color: '#666666' }}>
